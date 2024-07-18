@@ -1,5 +1,5 @@
 {
-  "originHash" : "5b924267ce7889ac0501dbb020705fde003cbb52c6f160bffb0e074a2cb09212",
+  "originHash" : "1e9bcff198f5c131542961aaf5bc87e220e025db9566e7bcbada49527a6e7996",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -17,15 +17,6 @@
       "state" : {
         "revision" : "7ece208cd401687641c88367a00e3ea2b04311f1",
         "version" : "1.19.0"
-      }
-    },
-    {
-      "identity" : "base58swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/keefertaylor/Base58Swift.git",
-      "state" : {
-        "revision" : "1c13ea6b07f1584660526f8bde3d4cc150e91acd",
-        "version" : "2.1.14"
       }
     },
     {

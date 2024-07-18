@@ -1,9 +1,7 @@
 import Vapor
 import RediStack
 
-import CryptoKit
 import Foundation
-import Base58Swift
 import BigInt
 import NIO
 
@@ -25,10 +23,15 @@ func sha256f(input: String) -> Data {
 	return digest.data
 }
 
-func base58Encoded(bytes: [UInt8]) -> String {
-	let encodedString = Base58.base58Encode(bytes)
+
+func base64URLEncoded(_ input: Data) -> String {
+	let base64String = input.base64EncodedString()
 	
-	return encodedString
+	let urlSafeBase64String = base64String
+		.replacingOccurrences(of: "+", with: "-")
+		.replacingOccurrences(of: "/", with: "-")
+		.replacingOccurrences(of: "=", with: "")
+	return urlSafeBase64String
 }
 
 
@@ -37,8 +40,8 @@ func generateShortLink(initialLink: String) -> String {
 	let urlHashBytes = sha256f(input: combinedString)
 	let generatedNumber = BigUInt(urlHashBytes).description
 	
-	let generatedBytes = [UInt8](Data(generatedNumber.utf8))
-	let finalString = base58Encoded(bytes: generatedBytes)
+	let generatedBytes = Data(generatedNumber.utf8)
+	let finalString = base64URLEncoded(generatedBytes)
 	return  String(finalString.prefix(8))
 }
 
@@ -84,7 +87,7 @@ func routes(_ app: Application) throws {
 		}
 	}
 	
-	app.get("url", ":shortURL") { req async throws -> ShortURL in
+	app.get("url", ":shortURL") { req async throws -> Response in
 		let urlParameter = req.parameters.get("shortURL")!
 		
 		let key = RedisKey(urlParameter)
@@ -92,7 +95,7 @@ func routes(_ app: Application) throws {
 		let value = try await req.redis.get(key, asJSON: ShortURL.self)
 		
 		if let result = value {
-			return result
+			return req.redirect(to:  result.initialURL, redirectType: .permanent)
 		}
 		throw Abort(.notFound)
 	}

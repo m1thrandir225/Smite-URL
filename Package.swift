@@ -12,7 +12,7 @@ let package = Package(
         // 🔵 Non-blocking, event-driven networking for Swift. Used for custom executors
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.65.0"),
 		.package(url: "https://github.com/vapor/redis.git", from: "4.0.0"),
-		.package(url: "https://github.com/keefertaylor/Base58Swift.git", from: "2.1.0")
+		.package(url: "https://github.com/attaswift/BigInt", from: "5.4.1")
     ],
     targets: [
         .executableTarget(
@@ -22,7 +22,7 @@ let package = Package(
                 .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "NIOPosix", package: "swift-nio"),
 				.product(name: "Redis", package: "redis"),
-				.product(name: "Base58Swift", package: "Base58Swift")
+				.product(name: "BigInt", package: "BigInt")
             ],
             swiftSettings: swiftSettings
         ),
