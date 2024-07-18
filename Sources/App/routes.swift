@@ -5,6 +5,7 @@ import CryptoKit
 import Foundation
 import Base58Swift
 import BigInt
+import NIO
 
 extension Digest {
 	var bytes: [UInt8] { Array(makeIterator())}
@@ -45,29 +46,54 @@ func generateShortLink(initialLink: String) -> String {
 //
 //}
 
+private func expireRedisKey(_ key: RedisKey, redis: Vapor.Request.Redis) {
+	let expireDuration = TimeAmount.hours(6)
+	_ = redis.expire(key, after: expireDuration)
+}
 
 func routes(_ app: Application) throws {
-    app.get { req async in
-        "It works!"
-    }
+	app.post("short") { req async throws -> ShortURL in
+		do {
+			let initialLink = try req.content.decode(CreateShortURLRequest.self)
+			
+			let generatedShortLink = generateShortLink(initialLink: initialLink.url)
 
-    app.get("hello") { req async -> String in
-        "Hello, world!"
-    }
-	app.get("short", ":link") { req -> EventLoopFuture<String> in
-		let initialLink = req.parameters.get("link")!
-		let cacheKey = initialLink // Use the initialLink directly as the key
-		
-		return req.redis.get(RedisKey(cacheKey)).flatMap { result in
-			if let result = result.string {
-				return req.eventLoop.future(result)
+			let cacheKey = generatedShortLink // Use the initialLink directly as the key
+			
+			let cachedValue = try await req.redis.get(RedisKey(cacheKey), asJSON: ShortURL.self)
+
+			if let cachedValue = cachedValue {
+				return cachedValue
 			} else {
-				let generatedShortLink = generateShortLink(initialLink: initialLink)
-				return req.redis.set(RedisKey(cacheKey), toJSON: generatedShortLink).flatMap {
-					return req.eventLoop.future(generatedShortLink)
+				
+				let shortURLObject = ShortURL(initialURL: initialLink.url, shortURL: generatedShortLink)
+				
+				req.redis.set(RedisKey(cacheKey), toJSON: shortURLObject).whenComplete { result in
+					switch result {
+					case .success:
+						expireRedisKey(RedisKey(cacheKey), redis: req.redis)
+					case .failure(let error):
+						print("The request was not cached. Reason: \(error)")
+					}
 				}
+				
+				return shortURLObject
 			}
+		} catch {
+			throw Abort(.internalServerError)
 		}
 	}
-
+	
+	app.get("url", ":shortURL") { req async throws -> ShortURL in
+		let urlParameter = req.parameters.get("shortURL")!
+		
+		let key = RedisKey(urlParameter)
+		
+		let value = try await req.redis.get(key, asJSON: ShortURL.self)
+		
+		if let result = value {
+			return result
+		}
+		throw Abort(.notFound)
+	}
 }
