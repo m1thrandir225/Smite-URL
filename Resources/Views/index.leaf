@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Vapor 4 and Tailwind CSS</title>
+    <link rel="stylesheet" href="/styles/app.generated.css" />
+  </head>
+  <body>
+    <div class="flex h-screen justify-center items-center bg-black">
+      <div class="text-center">
+        <h1 class="text-xl text-white">It works...perfectly 🚀</h1>
+      </div>
+    </div>
+  </body>
+</html>

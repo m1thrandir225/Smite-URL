@@ -2,52 +2,8 @@ import Vapor
 import RediStack
 
 import Foundation
-import BigInt
 import NIO
 
-extension Digest {
-	var bytes: [UInt8] { Array(makeIterator())}
-	var data: Data { Data(bytes)}
-	
-	var hexStr: String {
-		bytes.map {
-			String(format: "%02X", $0)
-		}.joined()
-	}
-}
-
-func sha256f(input: String) -> Data {
-	let dataFromString = input.data(using: .utf8)!
-	let digest = SHA256.hash(data: dataFromString)
-	
-	return digest.data
-}
-
-
-func base64URLEncoded(_ input: Data) -> String {
-	let base64String = input.base64EncodedString()
-	
-	let urlSafeBase64String = base64String
-		.replacingOccurrences(of: "+", with: "-")
-		.replacingOccurrences(of: "/", with: "-")
-		.replacingOccurrences(of: "=", with: "")
-	return urlSafeBase64String
-}
-
-
-func generateShortLink(initialLink: String) -> String {
-	let combinedString = initialLink
-	let urlHashBytes = sha256f(input: combinedString)
-	let generatedNumber = BigUInt(urlHashBytes).description
-	
-	let generatedBytes = Data(generatedNumber.utf8)
-	let finalString = base64URLEncoded(generatedBytes)
-	return  String(finalString.prefix(8))
-}
-
-//func getFromCache(key: String) -> String {
-//
-//}
 
 private func expireRedisKey(_ key: RedisKey, redis: Vapor.Request.Redis) {
 	let expireDuration = TimeAmount.hours(6)
@@ -55,13 +11,15 @@ private func expireRedisKey(_ key: RedisKey, redis: Vapor.Request.Redis) {
 }
 
 func routes(_ app: Application) throws {
+	try app.register(collection: PagesController())
+	
 	app.post("short") { req async throws -> ShortURL in
 		do {
 			let initialLink = try req.content.decode(CreateShortURLRequest.self)
 			
-			let generatedShortLink = generateShortLink(initialLink: initialLink.url)
+			let generatedShortLink = generateShortURL(initialLink: initialLink.url)
 
-			let cacheKey = generatedShortLink // Use the initialLink directly as the key
+			let cacheKey = generatedShortLink
 			
 			let cachedValue = try await req.redis.get(RedisKey(cacheKey), asJSON: ShortURL.self)
 

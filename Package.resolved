@@ -1,5 +1,5 @@
 {
-  "originHash" : "1e9bcff198f5c131542961aaf5bc87e220e025db9566e7bcbada49527a6e7996",
+  "originHash" : "82489a5c72c31d8231b3a00153881beeef06c2fafe01342bbe064e290ea6d68f",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -35,6 +35,24 @@
       "state" : {
         "revision" : "9f7932f22ab6f64aafadc14491e694179b7d0f6f",
         "version" : "4.14.3"
+      }
+    },
+    {
+      "identity" : "leaf",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vapor/leaf.git",
+      "state" : {
+        "revision" : "0be8765af9991823c854d97faa4a97db1cfa2643",
+        "version" : "4.3.0"
+      }
+    },
+    {
+      "identity" : "leaf-kit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vapor/leaf-kit.git",
+      "state" : {
+        "revision" : "c04e54753fb30a985b42c3be8530bb94442da9c6",
+        "version" : "1.11.0"
       }
     },
     {
@@ -197,6 +215,24 @@
       "state" : {
         "revision" : "6a9e38e7bd22a3b8ba80bddf395623cf68f57807",
         "version" : "1.3.1"
+      }
+    },
+    {
+      "identity" : "swift-tools-support-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-tools-support-core.git",
+      "state" : {
+        "revision" : "3b13e439a341bbbfe0f710c7d1be37221745ef1a",
+        "version" : "0.6.1"
+      }
+    },
+    {
+      "identity" : "swiftytailwind",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tuist/SwiftyTailwind.git",
+      "state" : {
+        "revision" : "d2bc66eb6b993bc2d755d64e1fc7f59359c265f7",
+        "version" : "0.5.0"
       }
     },
     {
