@@ -9,17 +9,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
   </head>
   <body class="w-full h-full">
-      <main class="flex flex-col items-center justify-center w-screen h-screen bg-neutral-200">
-        <div class="flex flex-col items-start  justify-center">
-            <h1> Smite URL </h1>
-            <form id="createURLForm" method="POST" class="flex flex-row items-center justify-between max-w-[250px] gap-4">
-                <input type="url" name="initialURL" id="initialURL" />
-                <button id="createURLButton" type="submit"> Create URL </button>
+      <main class="flex flex-col items-center justify-center w-screen h-screen bg-gray-50">
+        <div class="flex flex-col items-start gap-8 justify-center  mx-auto px-6 max-w-[600px]">
+            <img src="/images/smite-url-logo.webp" loading="prefetch" class="h-auto w-full" />
+            <form id="createURLForm" method="POST" class="flex flex-col sm:flex-row items-center justify-between w-full gap-4">
+                <input type="url" name="initialURL" id="initialURL" class="w-full focus:outline-none ring ring-1 focus:ring-2 ring-yellow-400 focus:ring-yellow-500 rounded-md px-4 py-2 focus:text-yellow-500 placeholder-yellow-600 text-lg transition-all ease-in-out duration-100 " placeholder="Enter an url..." />
+                <button id="createURLButton" type="submit" class="px-8 w-full sm:w-auto py-2 rounded-md ring ring-1 ring-cyan-400 hover:ring-2 hover:ring-yellow-400 hover:text-yellow-500 hover:bg-white transition-all ease-in-out duration-100 text-lg"> Create </button>
             </form>
-            <div id="result"></div>
+            <div id="result" class="hidden w-full p-4 rounded-lg ring-1 hover:ring-2 ring-amber-400 bg-amber-100 max-h-[100px] transition-all ease-in-out duration-100">
+            <h1 class="font-extrabold text-2xl text-amber-500"> Your shortened url: </h1>
+             <a href="" class="linkNode hidden text-lg font-bold text-cyan-600 hover:text-xl hover:text-cyan-700 transition-all ease-in-out duration-100"> </a>
+            </div>
         </div>
       </main> 
       <script src="/js/toast.js" type="module"/></script>
       <script src="/js/main.js" type="module"/></script>
   </body>
-</html>
+</html> 

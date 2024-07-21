@@ -5,7 +5,11 @@ import Toast from "./toast.js";
  * @param {HTMLElement} container
  */
 function clearContainer(container) {
-  container.innerHTML = "";
+  const childLinks = container.getElementsByClassName("linkNode");
+
+  Array.from(childLinks).forEach((el) => {
+    container.removeChild(el);
+  });
 }
 /**
  *
@@ -36,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitButton = document.getElementById("createURLButton");
   const form = document.getElementById("createURLForm");
   const resultContainer = document.getElementById("result");
-  Toast("Hello World");
 
   if (!urlInput || !submitButton || !form || !resultContainer) {
     throw new Error("Required DOM nodes missing.");
@@ -76,13 +79,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const redirectLink = composeShortLink(shortCode);
 
+    resultContainer.classList.remove("hidden");
+
     clearContainer(resultContainer);
 
     const linkNode = document.createElement("a");
 
     linkNode.textContent = redirectLink;
 
-    linkNode.classList = "text-lg text-neutral-900 font-bold";
+    linkNode.classList =
+      "linkNode text-lg font-bold text-cyan-600 hover:text-xl hover:text-cyan-700 transition-all ease-in-out duration-100";
 
     linkNode.setAttribute("href", redirectLink);
 
