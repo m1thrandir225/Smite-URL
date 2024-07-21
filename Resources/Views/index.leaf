@@ -2,14 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Vapor 4 and Tailwind CSS</title>
+    <title>Smite URL</title>
     <link rel="stylesheet" href="/styles/app.generated.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
   </head>
-  <body>
-    <div class="flex h-screen justify-center items-center bg-black">
-      <div class="text-center">
-        <h1 class="text-xl text-white">It works...perfectly 🚀</h1>
-      </div>
-    </div>
+  <body class="w-full h-full">
+      <main class="flex flex-col items-center justify-center w-screen h-screen bg-neutral-200">
+        <div class="flex flex-col items-start  justify-center">
+            <h1> Smite URL </h1>
+            <form id="createURLForm" method="POST" class="flex flex-row items-center justify-between max-w-[250px] gap-4">
+                <input type="url" name="initialURL" id="initialURL" />
+                <button id="createURLButton" type="submit"> Create URL </button>
+            </form>
+            <div id="result"></div>
+        </div>
+      </main> 
+      <script src="/js/toast.js" type="module"/></script>
+      <script src="/js/main.js" type="module"/></script>
   </body>
 </html>
