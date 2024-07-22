@@ -15,6 +15,7 @@ let package = Package(
 		.package(url: "https://github.com/attaswift/BigInt", from: "5.4.1"),
 		.package(url: "https://github.com/tuist/SwiftyTailwind.git", .upToNextMinor(from: "0.5.0")),
 		.package(url: "https://github.com/vapor/leaf.git", from: "4.0.0"),
+		.package(url: "https://github.com/m1thrandir225/base58-swift", from: "1.0.0")
 
     ],
     targets: [
@@ -27,7 +28,8 @@ let package = Package(
 				.product(name: "Redis", package: "redis"),
 				.product(name: "BigInt", package: "BigInt"),
 				.product(name: "SwiftyTailwind", package: "SwiftyTailwind"),
-				.product(name: "Leaf", package: "leaf")
+				.product(name: "Leaf", package: "leaf"),
+				.product(name: "Base58", package: "base58-swift")
             ],
             swiftSettings: swiftSettings
         ),

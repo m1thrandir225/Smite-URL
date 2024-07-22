@@ -1,5 +1,5 @@
 {
-  "originHash" : "82489a5c72c31d8231b3a00153881beeef06c2fafe01342bbe064e290ea6d68f",
+  "originHash" : "667511180e1e21be5a9353fdf7ef6b3ff22335292af53568997fb6ad73ff6d21",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "7ece208cd401687641c88367a00e3ea2b04311f1",
         "version" : "1.19.0"
+      }
+    },
+    {
+      "identity" : "base58-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/m1thrandir225/base58-swift",
+      "state" : {
+        "revision" : "d2ab818794d2fb3d7272673c238dab8cc6c1e6c5",
+        "version" : "1.0.0"
       }
     },
     {

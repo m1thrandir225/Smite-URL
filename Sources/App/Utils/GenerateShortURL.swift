@@ -15,6 +15,8 @@ func generateShortURL(initialLink: String) -> String {
 	let generatedNumber = BigUInt(urlHashBytes).description
 	
 	let generatedBytes = Data(generatedNumber.utf8)
-	let finalString = EncodeBase64(generatedBytes)
+	
+	//let finalString = EncodeBase64(generatedBytes)
+	let finalString = EncodeBase58(generatedBytes)
 	return  String(finalString.prefix(8))
 }
