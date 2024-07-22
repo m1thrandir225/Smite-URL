@@ -16,10 +16,13 @@ struct PagesController : RouteCollection {
             withParam.get(use: single)
         }
     }
-
+	
+	@Sendable
     func index(_ req: Request) -> EventLoopFuture<View> {
         return req.view.render("index")
     }
+	
+	@Sendable
     func single(_ req: Request) async throws -> Response {
         let urlParameter = req.parameters.get("shortURL")!
 		

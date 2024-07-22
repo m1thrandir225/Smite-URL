@@ -17,7 +17,8 @@ struct ShortController: RouteCollection {
             withParam.get(use: single)
         }
     }
-
+	
+	@Sendable
 	func single(_ req: Request) async throws -> ShortURL {
 		let urlParameter = req.parameters.get("shortURL")!
 		
@@ -31,8 +32,8 @@ struct ShortController: RouteCollection {
 		throw Abort(.notFound)
 	}
 
-
-    func create(_ req: Request) async throws -> ShortURL { 
+	@Sendable
+    func create(_ req: Request) async throws -> ShortURL {
 		do {
 			let initialLink = try req.content.decode(CreateShortURLRequest.self)
 
