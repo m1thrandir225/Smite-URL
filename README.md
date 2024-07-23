@@ -1,4 +1,4 @@
-![Header Image](./github/smite-url-header.png)
+![Header Image](./.github/smite-url-header.png)
 
 
 # Smite URL
