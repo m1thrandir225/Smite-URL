@@ -11,6 +11,7 @@ Other technologies used:
 - Docker
 - Redis
 
+You can launch the app using XCode (Swift 5.10) or using Docker.
 
 # TODO
 Right now the app only has a caching layer, in the future I want to add Fluent - which is the ORM for Vapor, so that there is a permanent way of storing the already shortened URL's.
