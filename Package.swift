@@ -14,20 +14,24 @@ let package = Package(
 		.package(url: "https://github.com/vapor/redis.git", from: "4.0.0"),
 		.package(url: "https://github.com/attaswift/BigInt", from: "5.4.1"),
 		.package(url: "https://github.com/vapor/leaf.git", from: "4.0.0"),
-		.package(url: "https://github.com/m1thrandir225/base58-swift", from: "1.0.0")
+		.package(url: "https://github.com/m1thrandir225/base58-swift", from: "1.0.0"),
+		.package(url: "https://github.com/vapor/fluent.git", from: "4.0.0"),
+		.package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.0.0")
 
     ],
     targets: [
         .executableTarget(
             name: "App",
             dependencies: [
+				.product(name: "Fluent", package: "fluent"),
                 .product(name: "Vapor", package: "vapor"),
                 .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "NIOPosix", package: "swift-nio"),
 				.product(name: "Redis", package: "redis"),
 				.product(name: "BigInt", package: "BigInt"),
 				.product(name: "Leaf", package: "leaf"),
-				.product(name: "Base58", package: "base58-swift")
+				.product(name: "Base58", package: "base58-swift"),
+				.product(name: "FluentPostgresDriver", package: "fluent-postgres-driver")
             ],
             swiftSettings: swiftSettings
         ),

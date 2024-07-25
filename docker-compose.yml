@@ -16,6 +16,10 @@ version: "3.7"
 
 x-shared_environment: &shared_environment
   LOG_LEVEL: ${LOG_LEVEL:-debug}
+  DATABASE_HOST: db
+  DATABASE_NAME: vapor_database
+  DATABASE_USERNAME: vapor_username
+  DATABASE_PASSWORD: vapor_password
 
 services:
   app:
@@ -30,6 +34,7 @@ services:
       - "8080:8080"
     depends_on:
       - cache
+      - db
     # user: '0' # uncomment to run as root for testing purposes even though Dockerfile defines 'vapor' user.
     command:
       [
@@ -45,3 +50,38 @@ services:
     image: redis:latest
     ports:
       - "6379:6379"
+  migrate:
+    image: smite_url:latest
+    build:
+      context: .
+    environment:
+      <<: *shared_environment
+    depends_on:
+      - db
+    command: ["migrate", "--yes"]
+    deploy:
+      replicas: 0
+  revert:
+      image: smite_url:latest
+      build:
+        context: .
+      environment:
+        <<: *shared_environment
+      depends_on:
+        - db
+      command: ["migrate", "--revert", "--yes"]
+      deploy:
+        replicas: 0
+  db:
+      image: postgres:16-alpine
+      volumes:
+        - db_data:/var/lib/postgresql/data/pgdata
+      environment:
+        PGDATA: /var/lib/postgresql/data/pgdata
+        POSTGRES_USER: vapor_username
+        POSTGRES_PASSWORD: vapor_password
+        POSTGRES_DB: vapor_database
+      ports:
+        - '5432:5432'
+volumes:
+  db_data:
