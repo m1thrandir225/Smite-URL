@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import struct Foundation.UUID
 import Fluent
 
-final class DBShortURL: Model {
+final class ShortURL: Model, @unchecked Sendable {
 	static let schema = "short_urls"
 	
 	@ID(key: .id)
@@ -33,5 +34,12 @@ final class DBShortURL: Model {
 		self.id = id
 		self.initialURL = initialURL
 		self.shortURL = shortURL
+	}
+	
+	func toDTO() -> ShortUrlDTO {
+		.init(
+			initialURL: self.initialURL,
+			shortURL: self.shortURL
+		)
 	}
 }

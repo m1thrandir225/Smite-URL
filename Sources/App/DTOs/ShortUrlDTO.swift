@@ -8,7 +8,14 @@
 import Vapor
 
 
-struct ShortURL: Content {
+struct ShortUrlDTO: Content {
 	let initialURL: String
 	let shortURL: String
+	
+	func toModel() -> ShortURL {
+		.init(
+			initialURL: self.initialURL,
+			shortURL: self.shortURL
+		)
+	}
 }
