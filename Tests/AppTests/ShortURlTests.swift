@@ -1,7 +1,12 @@
+//
+//  File.swift
+//  
+//
+//  Created by Sebastijan Zindl on 25.7.24.
+//
 @testable import App
 import XCTVapor
-
-final class AppTests: XCTestCase {
+final class ShortURlTests : XCTestCase {
 	var app: Application!
 	
 	override func setUp() async throws {
@@ -14,7 +19,7 @@ final class AppTests: XCTestCase {
 		self.app = nil
 	}
 	
-	func testCreateShortURL() {
-		
+	func testCreate() {
+		let shortURL = ShortURL(initialURL: "", shortURL: "")
 	}
 }
