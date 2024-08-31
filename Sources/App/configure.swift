@@ -25,12 +25,12 @@ public func configure(_ app: Application) async throws {
 	 *	Postgres Configuration
 	 *
 	 */
-
 	//TODO: add environment variables
 	let dbHostname = Environment.get("DATABASE_HOST") ?? ""
 	let dbName = Environment.get("DATABASE_NAME") ?? ""
 	let dbUsername = Environment.get("DATABASE_USERNAME") ?? ""
 	let dbPassword = Environment.get("DATABASE_PASSWORD") ?? ""
+
 	app.databases.use(
 		.postgres(
 			configuration: .init(

@@ -8,7 +8,6 @@
 import Foundation
 import Fluent
 
-
 struct InitialMigration: AsyncMigration {
 	func prepare(on database: any Database) async throws {
 		try await database.schema("short_urls")
@@ -21,7 +20,6 @@ struct InitialMigration: AsyncMigration {
 			.create()
 			
 	}
-	
 	func revert(on database: any Database) async throws {
 		try await database.schema("short_urls").delete()
 	}
